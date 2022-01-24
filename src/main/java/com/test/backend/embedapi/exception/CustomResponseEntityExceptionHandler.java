@@ -18,6 +18,9 @@ import static java.time.LocalDateTime.*;
 @Slf4j
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
+    /*
+    *  요청 파라미터에서 발생한하는 예외에 대한 처리 4XX
+    * */
     @ExceptionHandler(IllegalArgumentException.class)
     public final ResponseEntity<Object> handleValidatedException(Exception ex, WebRequest request){
         log.info("{} request, but {}",request.getDescription(true),ex.getMessage());
@@ -26,6 +29,9 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
+    /*
+    *   서버단에서 발생하는 기타 예외에 대한 처리 5XX
+    * */
     @ExceptionHandler(RuntimeException.class)
     public final ResponseEntity<Object> handleRuntimeException(Exception ex, WebRequest request){
         log.info("{} request, but {}",request.getDescription(true),ex.getMessage());

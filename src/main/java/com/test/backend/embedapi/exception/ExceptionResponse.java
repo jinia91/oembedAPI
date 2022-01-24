@@ -6,6 +6,10 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+
+/*
+*  예외 처리 응답용 DTO
+* */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

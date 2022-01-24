@@ -18,6 +18,9 @@ public class OembedService {
 
     private final OembedUrlFactory oembedUrlFactory;
 
+    /*
+    * oEmbed를 가져오는 메인 서비스 메서드
+    * */
     @Cacheable(value = "oEmbedCaching" , key = "{#url}")
     public JsonElement getOembed(String url) {
 
@@ -27,6 +30,9 @@ public class OembedService {
         return JsonParser.parseString(requireNonNull(response.getBody()));
    }
 
+   /*
+   *  외부 서버(provider)에 oEmbed를 요청하는 메인 비지니스 로직
+   * */
     private ResponseEntity<String> getOembedByProvider(String url) {
         log.info("request to provider for oEmbed : {} ", url);
         RestTemplate restTemplate = new RestTemplate();
@@ -40,6 +46,9 @@ public class OembedService {
         return response;
     }
 
+    /*
+    *   url 기본 유효성 검사
+    * */
     public void checkParameterUrl(String url) {
         if(url.equals(" ") || url.equals("")){
             throw new IllegalArgumentException("no valid URL parameter");

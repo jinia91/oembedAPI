@@ -12,6 +12,9 @@ public class WebConfig  implements WebMvcConfigurer {
 
     private final HandlerInterceptor loggingInterceptor;
 
+    /*
+    *   로깅위한 인터셉터 빈 등록
+    * */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loggingInterceptor)

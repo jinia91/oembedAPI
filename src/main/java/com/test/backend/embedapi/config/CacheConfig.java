@@ -11,6 +11,11 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Objects;
 
+
+/*
+*  EH 캐시 설정 클래스
+*
+* */
 @Configuration
 @EnableCaching
 public class CacheConfig {
