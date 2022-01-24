@@ -16,7 +16,6 @@ public class OembedService {
     public JsonElement getOembed(String url) {
 
         url = oembedUrlFactory.createOembedUrl(url);
-        System.out.println("url = " + url);
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
