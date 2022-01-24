@@ -3,6 +3,7 @@ package com.test.backend.embedapi.oembed.service;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -11,7 +12,10 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Objects.*;
+
 @Component
+@Slf4j
 public class OembedUrlFactory {
 
     static final List<String> providerEndpointUrlList = new ArrayList<>();
@@ -19,7 +23,7 @@ public class OembedUrlFactory {
     @PostConstruct
     private void buildProviderMap(){
         JsonArray providerList =
-                JsonParser.parseString(getOembedProviderList().getBody())
+                JsonParser.parseString(requireNonNull(getOembedProviderList().getBody()))
                 .getAsJsonArray();
 
         for(JsonElement provider :providerList){
@@ -39,7 +43,6 @@ public class OembedUrlFactory {
 
     public String createOembedUrl(String url) {
         String host = getHostFrom(url);
-
         for(String endpointUrl :providerEndpointUrlList){
             if(endpointUrl.contains(host)){
                 if(endpointUrl.contains("oembed.")){
@@ -53,6 +56,12 @@ public class OembedUrlFactory {
     }
 
     private static String getHostFrom(String url) {
-        return url.split("//")[1].split("/")[0];
+        String host = null;
+        try {
+            host = url.split("//")[1].split("/")[0];
+        } catch (RuntimeException e){
+            throw new IllegalArgumentException("no valid provider");
+        }
+        return host;
     }
 }

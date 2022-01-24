@@ -2,3 +2,12 @@ spring:
   mvc:
     converters:
       preferred-json-mapper: gson
+
+logging:
+  pattern:
+    file: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:line%line] - %msg%n"
+  file:
+    path: ./logs/
+  level:
+    org:
+      springframework: INFO
