@@ -1,4 +1,4 @@
-package com.test.backend.embedapi.oembed.log;
+package com.test.backend.embedapi.log;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

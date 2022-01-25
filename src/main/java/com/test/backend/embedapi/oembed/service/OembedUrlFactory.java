@@ -27,7 +27,8 @@ public class OembedUrlFactory {
     * 프로바이더별 oembed 스키마를 oembed 공식 서버에 요청, 앱 구동시기에 받아와서 저장하는 메서드
     * */
     @PostConstruct
-    private void buildProviderMap(){
+    private void buildProviderList(){
+        log.info("ProviderListBuild");
         JsonArray providerList =
                 JsonParser.parseString(requireNonNull(getOembedProviderList().getBody()))
                 .getAsJsonArray();
@@ -40,16 +41,20 @@ public class OembedUrlFactory {
             providerEndpointUrlList
                     .add(endPoint.substring(1,endPoint.length()-1));
         }
+        log.info("List building success");
     }
 
     /*
-    * 요청 url을 프로바이더별 oembed url로 변환하는 로직
+    *   외부서버에 oembed 프로바이더 리스트 요청
     * */
     private ResponseEntity<String> getOembedProviderList() {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForEntity("https://oembed.com/providers.json", String.class);
     }
 
+    /*
+     * 요청 url을 프로바이더별 oembed url로 변환하는 로직
+     * */
     public String createOembedUrl(String url) {
         String host = getHostFrom(url);
         for(String endpointUrl :providerEndpointUrlList){

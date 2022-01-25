@@ -40,7 +40,7 @@ public class OembedService {
         try {
             response = restTemplate.getForEntity(url, String.class);
         } catch (RuntimeException e){
-            throw new IllegalArgumentException("Provider consider that URL{} is not valid");
+            throw new IllegalArgumentException(String.format("Provider consider that URL{%s} is not valid",url));
         }
         log.info("provider response success");
         return response;
