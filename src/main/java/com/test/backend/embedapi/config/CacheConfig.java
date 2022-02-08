@@ -20,9 +20,7 @@ import java.util.Objects;
 @EnableCaching
 public class CacheConfig {
 
-    /*
-        - EhCache 팩터리 빈 등록
-    */
+
     @Bean
     public EhCacheManagerFactoryBean cacheManagerFactoryBean(){
         return new EhCacheManagerFactoryBean();

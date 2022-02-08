@@ -19,6 +19,7 @@ public class OembedController {
     @GetMapping("/v1/oembed")
     public ResponseEntity<JsonElement> getOembed(@RequestParam String url){
         oembedService.checkParameterUrl(url);
-        return ResponseEntity.ok(oembedService.getOembed(url));
+
+        return ResponseEntity.ok(this.oembedService.getOembed(url));
     }
 }
