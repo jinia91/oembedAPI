@@ -1,5 +1,6 @@
 package com.test.backend.embedapi.oembed.service;
 
+import com.test.backend.embedapi.oembed.Url;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,9 +8,9 @@ import org.junit.jupiter.api.Test;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-class OembedUrlFactoryUnitTest {
+class OembedUrlCreateServiceUnitTest {
 
-    private final OembedUrlFactory oembedUrlFactory = new OembedUrlFactory();
+    private final OembedUrlCreateService oembedUrlCreateService = new OembedUrlCreateService();
 
     private static final String YOUTUBE_URL_SAMPLE = "https://www.youtube.com/watch?v=dBD54EZIrZo";
     //    private static final String INSTAGRAM_URL_SAMPLE = "";
@@ -19,9 +20,9 @@ class OembedUrlFactoryUnitTest {
     @BeforeEach
     void providerListBuilding(){
         try {
-            Method method = oembedUrlFactory.getClass().getDeclaredMethod("buildProviderList");
+            Method method = oembedUrlCreateService.getClass().getDeclaredMethod("buildProviderList");
             method.setAccessible(true);
-            method.invoke(oembedUrlFactory);
+            method.invoke(oembedUrlCreateService);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
@@ -34,31 +35,31 @@ class OembedUrlFactoryUnitTest {
     @Test
     public void 유튜브OembedProviderUrl생성테스트() throws Exception {
     // given
-
+        Url url = new Url(YOUTUBE_URL_SAMPLE);
     // when
-        String oembedUrl = oembedUrlFactory.createOembedUrl(YOUTUBE_URL_SAMPLE);
+        Url oembedUrl = oembedUrlCreateService.createOembedUrl(url);
         // then
-        Assertions.assertThat(oembedUrl)
+        Assertions.assertThat(oembedUrl.getUrl())
                 .isEqualTo("https://www.youtube.com/oembed?format=json&url=" + YOUTUBE_URL_SAMPLE);
     }
     @Test
     public void 트위터OembedProviderUrl생성테스트() throws Exception {
         // given
-
+        Url url = new Url(TWITTER_URL_SAMPLE);
         // when
-        String oembedUrl = oembedUrlFactory.createOembedUrl(TWITTER_URL_SAMPLE);
+        Url oembedUrl = oembedUrlCreateService.createOembedUrl(url);
         // then
-        Assertions.assertThat(oembedUrl)
-                .isEqualTo("https://publish.twitter.com/oembed?format=json&url=" + TWITTER_URL_SAMPLE);
+        Assertions.assertThat(oembedUrl.getUrl())
+                .isEqualTo("https://publish.twitter.com/oembed?format=json&url=" + url.getUrl());
     }
     @Test
     public void 비메오OembedProviderUrl생성테스트() throws Exception {
         // given
-
+        Url url = new Url(VIMEO_URL_SAMPLE);
         // when
-        String oembedUrl = oembedUrlFactory.createOembedUrl(VIMEO_URL_SAMPLE);
+        Url oembedUrl = oembedUrlCreateService.createOembedUrl(url);
         // then
-        Assertions.assertThat(oembedUrl)
-                .isEqualTo("https://vimeo.com/api/oembed.json?url=" + VIMEO_URL_SAMPLE);
+        Assertions.assertThat(oembedUrl.getUrl())
+                .isEqualTo("https://vimeo.com/api/oembed.json?url=" + url.getUrl());
     }
 }

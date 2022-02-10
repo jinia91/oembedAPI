@@ -3,6 +3,7 @@ package com.test.backend.embedapi.oembed.service;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.test.backend.embedapi.oembed.Url;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -19,7 +20,7 @@ import static java.util.Objects.*;
 * */
 @Component
 @Slf4j
-public class OembedUrlFactory {
+public class OembedUrlCreateService {
 
     static final List<String> providerEndpointUrlList = new ArrayList<>();
 
@@ -55,15 +56,15 @@ public class OembedUrlFactory {
     /*
      * 요청 url을 프로바이더별 oembed url로 변환하는 로직
      * */
-    public String createOembedUrl(String url) {
-        String host = getHostFrom(url);
+    public Url createOembedUrl(Url url) {
+        String host = getHostFrom(url.getUrl());
         for(String endpointUrl :providerEndpointUrlList){
             if(endpointUrl.contains(host)){
                 if(endpointUrl.contains("oembed.")){
                     if(endpointUrl.contains("{format}")) endpointUrl = endpointUrl.replace("{format}","json");
-                    return endpointUrl + "?url=" + url;
+                    return new Url(endpointUrl + "?url=" + url.getUrl());
                 }
-                return endpointUrl + "?format=json&url=" + url;
+                return new Url(endpointUrl + "?format=json&url=" + url.getUrl());
             }
         }
         throw new IllegalArgumentException("cant support provider");

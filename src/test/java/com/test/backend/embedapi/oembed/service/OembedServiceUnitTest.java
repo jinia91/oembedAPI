@@ -1,6 +1,7 @@
 package com.test.backend.embedapi.oembed.service;
 
 import com.google.gson.JsonElement;
+import com.test.backend.embedapi.oembed.Url;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -8,8 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class OembedServiceUnitTest {
@@ -23,28 +22,31 @@ class OembedServiceUnitTest {
     private OembedService oembedService;
 
     @Mock
-    private OembedUrlFactory oembedUrlFactory;
+    private OembedUrlCreateService oembedUrlCreateService;
 
-    @Test
-    public void 기본유효성검사테스트() throws Exception {
-        // given
-        String url = " ";
-        // when
-        // then
-
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-                oembedService.checkParameterUrl(url));
-        assertEquals("no valid URL parameter",exception.getMessage());
-    }
+    // 유효성 검사는 컨트롤러 단에서 하자
+//    @Test
+//    public void 기본유효성검사테스트() throws Exception {
+//        // given
+//        String url = " ";
+//        // when
+//        // then
+//
+//        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
+//                checkParameterUrl(url));
+//        assertEquals("no valid URL parameter",exception.getMessage());
+//    }
 
     @Test
     public void 유튜브oEmbedUrl생성테스트() throws Exception {
         // given
+        Url url = new Url(YOUTUBE_URL_SAMPLE);
         Mockito
-                .when(oembedUrlFactory.createOembedUrl(YOUTUBE_URL_SAMPLE))
-                .thenReturn("https://www.youtube.com/oembed?url=" + YOUTUBE_URL_SAMPLE);
+                .when(oembedUrlCreateService.createOembedUrl(url))
+                .thenReturn(new Url("https://www.youtube.com/oembed?url=" + YOUTUBE_URL_SAMPLE));
         // when
-        JsonElement oembed = oembedService.getOembed(YOUTUBE_URL_SAMPLE);
+        Url oembedUrl = oembedUrlCreateService.createOembedUrl(url);
+        JsonElement oembed = oembedService.getOembed(oembedUrl);
         // then
         Assertions.assertThat(oembed.getAsJsonObject().get("title").toString())
                 .isNotNull()
@@ -57,12 +59,14 @@ class OembedServiceUnitTest {
     @Test
     public void 트위터oEmbedUrl생성테스트() throws Exception {
         // given
+        Url url = new Url(TWITTER_URL_SAMPLE);
         Mockito
-                .when(oembedUrlFactory.createOembedUrl(TWITTER_URL_SAMPLE))
-                .thenReturn("https://publish.twitter.com/oembed?format=json&url=" + TWITTER_URL_SAMPLE);
+                .when(oembedUrlCreateService.createOembedUrl(url))
+                .thenReturn(new Url("https://publish.twitter.com/oembed?format=json&url=" + TWITTER_URL_SAMPLE));
 
         // when
-        JsonElement oembed = oembedService.getOembed(TWITTER_URL_SAMPLE);
+        Url oembedUrl = oembedUrlCreateService.createOembedUrl(url);
+        JsonElement oembed = oembedService.getOembed(oembedUrl);
         // then
         Assertions.assertThat(oembed.getAsJsonObject().get("url").toString())
                 .isNotNull()
@@ -75,12 +79,14 @@ class OembedServiceUnitTest {
     @Test
     public void VIMEOoEmbedUrl생성테스트() throws Exception {
         // given
+        Url url = new Url(VIMEO_URL_SAMPLE);
         Mockito
-                .when(oembedUrlFactory.createOembedUrl(VIMEO_URL_SAMPLE))
-                .thenReturn("https://vimeo.com/api/oembed.json?url=" + VIMEO_URL_SAMPLE);
+                .when(oembedUrlCreateService.createOembedUrl(url))
+                .thenReturn(new Url("https://vimeo.com/api/oembed.json?url=" + VIMEO_URL_SAMPLE));
 
         // when
-        JsonElement oembed = oembedService.getOembed(VIMEO_URL_SAMPLE);
+        Url oembedUrl = oembedUrlCreateService.createOembedUrl(url);
+        JsonElement oembed = oembedService.getOembed(oembedUrl);
         // then
         Assertions.assertThat(oembed.getAsJsonObject().get("title").toString())
                 .isNotNull()
