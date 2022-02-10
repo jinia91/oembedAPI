@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.client.RestTemplate;
 
 @ExtendWith(MockitoExtension.class)
 class OembedServiceUnitTest {
@@ -19,10 +20,12 @@ class OembedServiceUnitTest {
     private static final String VIMEO_URL_SAMPLE = "https://vimeo.com/20097015";
 
     @InjectMocks
-    private OembedService oembedService;
+    private OembedService oembedService = new OembedService(new RestTemplate());
 
     @Mock
     private OembedUrlCreateService oembedUrlCreateService;
+
+
 
     // 유효성 검사는 컨트롤러 단에서 하자
 //    @Test

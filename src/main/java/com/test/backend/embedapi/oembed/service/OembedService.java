@@ -15,6 +15,8 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 public class OembedService {
 
+    private final RestTemplate restTemplate;
+
     /**
     * oEmbed를 가져오는 메인 서비스 메서드
     * @Return provider에 따라 비정형데이터를 받아오기때문에, 객체 포메팅이 힘들어 JsonElement로 반환
@@ -31,7 +33,6 @@ public class OembedService {
    * */
     private String getOembedByProvider(String url) {
         log.info("request to provider for oEmbed : {} ", url);
-        RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response;
         try {
             response = restTemplate.getForEntity(url, String.class);
