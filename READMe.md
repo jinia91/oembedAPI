@@ -23,16 +23,20 @@
 - java -jar embedapi-0.0.1-SNAPSHOT.jar
 
 ## 도커와 도커허브를 사용해 ec2 서버에 배포
-- 호스트:포트
+
+- 호스트:포트(백엔드 서버입니다! 화이트라벨이 정상!)
+
 http://3.38.36.238:8081/
 
 - 헬스체크
+
 [체크](http://3.38.36.238:8081/api/ping)
 
-- oembed 요청 api
-http://3.38.36.238:8081/v1/oembed
 
 - 예시 링크
+
 [유튜브 예시](http://3.38.36.238:8081/v1/oembed?url=https://www.youtube.com/watch?v=dBD54EZIrZo)
+
 [트위터 예시](http://3.38.36.238:8081/v1/oembed?url=https://twitter.com/hellopolicy/status/867177144815804416)
+
 [vimeo 예시](http://3.38.36.238:8081/v1/oembed?url=https://vimeo.com/20097015)
