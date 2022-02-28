@@ -49,6 +49,7 @@ jobs:
         username: ec2-user 
         key: ${{secrets.SSH_PRIVATE_KEY}} 
         script: | 
+          echo "동작 확인 접속 됬냐?"
           docker pull jinia91/embedapi:latest
           docker tag jinia91/embedapi:latest embedapi
           docker stop server 
