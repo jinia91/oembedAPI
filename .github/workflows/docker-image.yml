@@ -19,7 +19,7 @@ jobs:
       uses: appleboy/ssh-action@master 
       with: 
         host: 3.38.36.238 
-        username: ec2-user 
+        username: root
         key: ${{secrets.SSH_PRIVATE_KEY}} 
         port: 22
         script: | 
