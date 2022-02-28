@@ -50,6 +50,5 @@ jobs:
         key: ${{secrets.SSH_PRIVATE_KEY}} 
         script: | 
           docker pull jinia91/embedapi:latest
-          docker tag jinia91/embedapi:latest
           docker stop server 
-          docker run -d --rm --name server -p 8081:8080
+          docker run -d --rm --name server -p 8081:8080 jinia91/embedapi:latest
