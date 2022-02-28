@@ -21,5 +21,6 @@ jobs:
         host: "3.38.36.238"
         username: ec2-user
         key: ${{secrets.SSH_PRIVATE_KEY}}
+        script_stop: true
         script: | 
           echo "동작 확인 접속 됬냐?"
