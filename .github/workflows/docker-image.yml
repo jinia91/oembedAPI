@@ -32,3 +32,12 @@ jobs:
       with:
         username: ${{secrets.DOCKERHUB_USERNAME}}
         password: ${{secrets.DOCKERHUB_TOKEN}}
+
+    - name: build and release to DockerHub
+      env:
+        NAME: jinia91
+        REPO: embedapi
+      run: |
+        docker build -t $REPO .
+        docker tag $REPO:latest $NAME/$REPO:latest
+        docker push $NAME/$REPO:latest
